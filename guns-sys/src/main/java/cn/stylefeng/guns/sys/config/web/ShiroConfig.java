@@ -176,10 +176,13 @@ public class ShiroConfig {
          *
          */
         Map<String, String> hashMap = new LinkedHashMap<>();
+        hashMap.put("/statictest/**","anon");
         for (String nonePermissionRe : Const.NONE_PERMISSION_RES) {
             hashMap.put(nonePermissionRe, "anon");
         }
+
         hashMap.put("/**", "user");
+
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
     }

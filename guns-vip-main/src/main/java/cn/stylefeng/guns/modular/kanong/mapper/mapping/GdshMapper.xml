@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.kanong.mapper.GdshMapper">
+
+
+
+    <sql id="GDSH_Column_List">
+        knuser.id AS "id",  knuser.xlxm as "xlxm",knuser.xnxm as "xnxm", knuser.hljd as "hljd",knuser.hlrq as "hlrq",knuser.zt as "zt",
+        sysuserjdr.name as "jdr",knuser.tdjl as "tdjl",knuser.jdrq as "jdrq",
+        sysuserscgd.name as "scgdr",scgd.gdjg as "scgdjg",scgd.gdjl as "scgdjl", scgd.cjrq as "scgdcjrq",
+        sysuserecgd.name AS "ecgdr", ecgd.ecgdjg AS "ecgdjg", ecgd.ecgdjl AS "ecgdjl", ecgd.eccjrq AS "ecgdcjrq"
+    </sql>
+
+
+    <select id="customPageListSH" resultType="cn.stylefeng.guns.modular.kanong.model.result.GdshResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.GdshParam">
+        select
+        <include refid="GDSH_Column_List"/>
+        from kn_user knuser
+        left join kn_scgd scgd on knuser.id=scgd.kn_user_id
+        left join kn_ecgd ecgd on knuser.id=ecgd.kn_user_id
+        left join sys_user sysuserjdr on knuser.jdr=sysuserjdr.user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        where (knuser.zt=4)
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+    </select>
+
+    <select id="getGdshById" resultType="cn.stylefeng.guns.modular.kanong.model.result.GdshResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.GdshParam">
+        select
+        <include refid="GDSH_Column_List"/>
+        from kn_user knuser
+        left join kn_scgd scgd on knuser.id=scgd.kn_user_id
+        left join kn_ecgd ecgd on knuser.id=ecgd.kn_user_id
+        left join sys_user sysuserjdr on knuser.jdr=sysuserjdr.user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        where (knuser.zt=4 and knuser.id=#{paramCondition.id})
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+    </select>
+
+    <update id="updateJXGD" parameterType="cn.stylefeng.guns.modular.kanong.model.params.GdshParam">
+        update kn_user set zt=#{paramCondition.zt}  where id=#{paramCondition.id}
+    </update>
+
+    <update id="updateJXGDSC" parameterType="cn.stylefeng.guns.modular.kanong.model.params.GdshParam">
+        update kn_scgd set gdjg=''  where kn_user_id=#{paramCondition.id}
+    </update>
+
+    <update id="updateJXGDEC" parameterType="cn.stylefeng.guns.modular.kanong.model.params.GdshParam">
+        update kn_ecgd set  ecgdjg='' where kn_user_id=#{paramCondition.id}
+    </update>
+
+    <update id="updateQRFQ" parameterType="cn.stylefeng.guns.modular.kanong.model.params.GdshParam">
+        update kn_user set zt=5 where id=#{paramCondition.id}
+    </update>
+
+</mapper>

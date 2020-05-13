@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.kanong.mapper.EcgdMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.kanong.entity.Ecgd">
+        <id column="id" property="id" />
+        <result column="kn_user_id" property="knUserId" />
+        <result column="gdr" property="gdr" />
+        <result column="gdjg" property="gdjg" />
+        <result column="gdjl" property="gdjl" />
+        <result column="cjrq" property="cjrq" />
+        <result column="jfdj" property="jfdj" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ecgd.id AS "id", ecgd.kn_user_id AS "knUserId", knuser.xlxm as "xlxm",knuser.xnxm as "xnxm", knuser.hljd as "hljd",knuser.hlrq as "hlrq",knuser.zt as "zt",
+        sysuserscgd.name as "gdr",scgd.cjrq as "cjrq",scgd.gdjl as "gdjl",
+           sysuserecgd.name AS "ecgdr", ecgd.ecgdr as "ecgdrid", ecgd.ecgdjg AS "ecgdjg", ecgd.ecgdjl AS "ecgdjl", ecgd.eccjrq AS "eccjrq", ecgd.ecjfdj AS "ecjfdj"
+    </sql>
+
+    <sql id="GDSH_Column_List">
+        knuser.id AS "id",  knuser.xlxm as "xlxm",knuser.xnxm as "xnxm", knuser.hljd as "hljd",knuser.hlrq as "hlrq",knuser.zt as "zt",
+        sysuserscgd.name as "scgdr",scgd.gdjg as "scgdjg",scgd.gdjl as "scgdjl", scgd.cjrq as "scgdcjrq",
+        sysuserecgd.name AS "ecgdr", ecgd.ecgdjg AS "ecgdjg", ecgd.ecgdjl AS "ecgdjl", ecgd.eccjrq AS "eccjrq"
+    </sql>
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.kanong.model.result.EcgdResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.EcgdParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ecgd where 1 = 1
+            <if test="paramCondition.knUserId != null and paramCondition.knUserId != ''">
+                and knUserId like CONCAT('%',#{paramCondition.knUserId},'%')
+            </if>
+            <if test="paramCondition.gdr != null and paramCondition.gdr != ''">
+                and gdr like CONCAT('%',#{paramCondition.gdr},'%')
+            </if>
+            <if test="paramCondition.gdjg != null and paramCondition.gdjg != ''">
+                and gdjg like CONCAT('%',#{paramCondition.gdjg},'%')
+            </if>
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.kanong.model.result.EcgdResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.EcgdParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ecgd ecgd left join kn_user knuser on ecgd.kn_user_id = knuser.id
+        left join kn_scgd scgd on ecgd.kn_user_id=scgd.kn_user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        where (knuser.zt=2 or knuser.zt=3 or knuser.zt=4)
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+
+        order by ecgd.eccjrq desc
+    </select>
+
+    <select id="getECGDById" resultType="cn.stylefeng.guns.modular.kanong.model.result.EcgdResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.EcgdParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ecgd ecgd left join kn_user knuser on ecgd.kn_user_id = knuser.id
+        left join kn_scgd scgd on ecgd.kn_user_id=scgd.kn_user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        where (knuser.zt=2 or knuser.zt=3 or knuser.zt=4) and  ecgd.id=#{paramCondition.id}
+
+    </select>
+
+    <select id="getECGDByKNUserId" resultType="cn.stylefeng.guns.modular.kanong.model.result.EcgdResult" parameterType="String">
+        select
+        ecgdr
+        from kn_ecgd ecgd
+        where ecgd.kn_user_id=#{knuserid}
+    </select>
+
+    <insert id="addPic"  parameterType="cn.stylefeng.guns.modular.kanong.entity.Tp" >
+        insert into kn_tp (id,tpzl,tpzl_id,tplj,cjrq) values (#{paramCondition.id},#{paramCondition.tpzl},#{paramCondition.tpzlId},#{paramCondition.tplj},#{paramCondition.cjrq})
+    </insert>
+
+    <select id="getPic" resultType="cn.stylefeng.guns.modular.kanong.model.result.TpResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.TpParam">
+        select id,tpzl,tpzl_id,tplj,cjrq from kn_tp where tpzl_id=#{paramCondition.tpzlId} and tpzl=#{paramCondition.tpzl} order by cjrq
+    </select>
+
+    <update id="updateUser" parameterType="cn.stylefeng.guns.modular.kanong.entity.KNUser">
+        update kn_user set zt=#{paramCondition.zt} where id=#{paramCondition.id}
+    </update>
+
+    <insert id="addDdkh" parameterType="cn.stylefeng.guns.modular.kanong.entity.Ddkh">
+        insert into kn_ddkh (id,kn_user_id,gdr,jfdj) values (#{ddkh.id},#{ddkh.knUserId},#{ddkh.gdr},#{ddkh.jfdj})
+    </insert>
+
+    <select id="customPageListSH" resultType="cn.stylefeng.guns.modular.kanong.model.result.EcgdResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.EcgdParam">
+        select
+        <include refid="GDSH_Column_List"/>
+        from kn_user knuser
+        left join kn_scgd scgd on knuser.id=scgd.kn_user_id
+        left join kn_ecgd ecgd on knuser.id=ecgd.kn_user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        where (knuser.zt=4)
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+    </select>
+</mapper>

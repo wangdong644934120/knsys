@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.kanong.mapper.KhcxMapper">
+
+    <sql id="GDSH_Column_List">
+        knuser.id AS "id",  knuser.xlxm as "xlxm",knuser.xnxm as "xnxm", knuser.hljd as "hljd",knuser.hlrq as "hlrq",
+        knuser.zt as "zt",
+        sysuserjdr.name as "jdr",knuser.tdjl as "tdjl",knuser.jdrq as "jdrq",
+        sysuserscgd.name as "scgdr",scgd.gdjg as "scgdjg",scgd.gdjl as "scgdjl", scgd.cjrq as "scgdcjrq",scgd.jfdj as "scgdjfdj",
+        sysuserecgd.name AS "ecgdr", ecgd.ecgdjg AS "ecgdjg", ecgd.ecgdjl AS "ecgdjl", ecgd.eccjrq AS "ecgdcjrq",
+        sysuserzfzr.name as "zfzr", ddkh.ddrq as "ddrq",ddkh.jfdj as "jfdj",ddkh.bz as "bz",ddkh.htje as "htje",
+        ddkh.sxspz as "sxspz",ddkh.syspz as "syspz",ddkh.sypz as "sypz",ddkh.hzspz as "hzspz",sysuserxgtsjs.name as "xgtsjs",
+        ddkh.jfdj as "jfdj",ddkh.jfdjwczt as "jfdjwczt",
+        ddkh.ddj as "ddj",ddkh.ddjwczt as "ddjwczt",ddkh.jdk as "jdk",ddkh.jdkwczt as "jdkwczt",ddkh.wk as "wk",
+        ddkh.wkwczt as "wkwczt"
+    </sql>
+
+
+    <select id="customPageListKHCX" resultType="cn.stylefeng.guns.modular.kanong.model.result.KhcxResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.KhcxParam">
+        select
+        <include refid="GDSH_Column_List"/>
+        from kn_user knuser
+        left join kn_scgd scgd on knuser.id=scgd.kn_user_id
+        left join kn_ecgd ecgd on knuser.id=ecgd.kn_user_id
+        left join sys_user sysuserjdr on knuser.jdr=sysuserjdr.user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        left join kn_ddkh ddkh on knuser.id=ddkh.kn_user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        left join sys_user sysuserxgtsjs on ddkh.xgtsjs=sysuserxgtsjs.user_id
+        where 1=1
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+        order by knuser.cjrq desc
+    </select>
+
+    <select id="getKhcxById" resultType="cn.stylefeng.guns.modular.kanong.model.result.KhcxResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.KhcxParam">
+        select
+        <include refid="GDSH_Column_List"/>
+        from kn_user knuser
+        left join kn_scgd scgd on knuser.id=scgd.kn_user_id
+        left join kn_ecgd ecgd on knuser.id=ecgd.kn_user_id
+        left join sys_user sysuserjdr on knuser.jdr=sysuserjdr.user_id
+        left join sys_user sysuserscgd on scgd.gdr=sysuserscgd.user_id
+        left join sys_user sysuserecgd on ecgd.ecgdr=sysuserecgd.user_id
+        left join kn_ddkh ddkh on knuser.id=ddkh.kn_user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        left join sys_user sysuserxgtsjs on ddkh.xgtsjs=sysuserxgtsjs.user_id
+        where  knuser.id=#{paramCondition.id}
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+        order by knuser.cjrq desc
+    </select>
+
+</mapper>

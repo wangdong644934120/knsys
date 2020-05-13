@@ -1,0 +1,115 @@
+@layout("/common/_container.html",{js:["/assets/knuser/knuser_add.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">添加</span>
+</div>
+
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="userForm" lay-filter="userForm" class="layui-form model-form" style="max-width: 700px;margin:auto;">
+                <input name="id" type="hidden"/>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新郎姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="xlxm" name="xlxm" placeholder="请输入姓名" type="text" class="layui-input" lay-verify="required" autocomplete="off" required/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新郎电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="xldh" name="xldh" placeholder="请输入电话" type="text" class="layui-input" autocomplete="off" lay-verify="required" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                        <label class="layui-form-label">新房地址</label>
+                        <div class="layui-input-block">
+                            <input id="xfdz" name="xfdz" placeholder="请输入新房地址" type="text" class="layui-input" autocomplete="off" style="width:488px"/>
+                        </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新娘姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="xnxm" name="xnxm" placeholder="请输入姓名" type="text" class="layui-input"  autocomplete="off" lay-verify="required" />
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新娘电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="xndh" name="xndh" placeholder="请输入电话" type="text" class="layui-input" autocomplete="off" lay-verify="required" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">娘家地址</label>
+                    <div class="layui-input-block">
+                        <input id="njdz" name="njdz" placeholder="请输入地址" type="text" class="layui-input" autocomplete="off"  style="width:488px"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">婚礼日期</label>
+                        <div class="layui-input-block">
+                            <input id="hlrq" name="hlrq"   placeholder="请选择婚礼日期" type="text" autocomplete="off" class="layui-input"  />
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">婚礼酒店</label>
+                        <div class="layui-input-block">
+                            <input id="hljd" name="hljd" placeholder="请输入婚礼酒店" type="text" autocomplete="off" class="layui-input" autocomplete="false" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">进店日期<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="jdrq" name="jdrq" placeholder="请输入进店日期" type="text" autocomplete="off" class="layui-input" autocomplete="false" lay-verify="required" required/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">接待人<span style="color: red;">*</span></label>
+                        <div class="layui-input-inline" style="width:176px" >
+                            <select id="jdr" name="jdr" lay-verify="required">
+                                <option value="">请选择接待人</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">谈单记录<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <textarea id="tdjl" name="tdjl" placeholder="请输入谈单记录"  class="layui-textarea" autocomplete="off" style="width:488px;height: 230px" lay-verify="required"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+                        <button class="layui-btn layui-btn-primary" type="button" id="backupPage">&emsp;返回&emsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@}

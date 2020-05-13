@@ -126,6 +126,9 @@ public class User implements Serializable {
     @TableField("version")
     private Integer version;
 
+    @TableField("openId")
+    private String openId;
+
 
     public Long getUserId() {
         return userId;
@@ -269,6 +272,14 @@ public class User implements Serializable {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     @Override

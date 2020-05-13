@@ -1,0 +1,128 @@
+@layout("/common/_container.html",{js:["/assets/scgd/scgd_edit.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">修改</span>
+</div>
+
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="scgdForm" lay-filter="scgdForm" class="layui-form model-form" style="max-width: 700px;margin:auto;">
+                <input name="id" type="hidden"/>
+                <input name="knUserId" type="hidden"/>
+                <input name="zt" type="hidden"/>
+                <fieldset class="layui-elem-field layui-field-title" style="color: #7f7f7f">
+                    <legend align="center">进店客户信息</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新郎姓名</label>
+                        <div class="layui-input-block">
+                            <input id="xlxm" name="xlxm" placeholder="" type="text" class="layui-input" lay-verify="required"  disabled/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新娘姓名</label>
+                        <div class="layui-input-block">
+                            <input id="xnxm" name="xnxm" placeholder="" type="text" class="layui-input" lay-verify="required"  disabled/>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">婚礼日期</label>
+                        <div class="layui-input-block">
+                            <input id="hlrq" name="hlrq"   placeholder="" type="text" class="layui-input"  disabled />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">婚礼酒店</label>
+                        <div class="layui-input-block">
+                            <input id="hljd" name="hljd" placeholder="" type="text" class="layui-input" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">进店日期</label>
+                        <div class="layui-input-block">
+                            <input id="jdrq" name="jdrq" placeholder="" type="text" class="layui-input" lay-verify="required"  disabled/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">接待人</label>
+                        <div class="layui-input-block">
+                            <input id="jdr" name="jdr" placeholder="" type="text" class="layui-input" lay-verify="required"  disabled/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">谈单记录</label>
+                    <div class="layui-input-block">
+                        <textarea id="tdjl" name="tdjl" placeholder=""  class="layui-textarea" style="width:488px;height: 130px" disabled ></textarea>
+                    </div>
+                </div>
+
+
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;color: #7f7f7f">
+                    <legend align="center">首次跟单信息</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">跟单结果<span style="color: red;">*</span></label>
+                        <div class="layui-input-inline" style="width:176px">
+                            <select id="gdjg" name="gdjg" lay-verify="required" >
+                                <option value="">请选择跟单结果</option>
+                                <option value="订单成交" selected="">订单成交</option>
+                                <option value="放弃跟单">放弃跟单</option>
+                                <option value="二次跟单">二次跟单</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">跟单人员<span style="color: red;">*</span></label>
+                        <div class="layui-input-inline" style="width:176px">
+                            <select id="gdr" name="gdr" lay-verify="required">
+                                <option value="">请选择跟单人员</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">跟单日期<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="cjrq" name="cjrq" placeholder="请输入跟单日期" type="text" class="layui-input" autocomplete="off" lay-verify="required" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+
+                        <label class="layui-form-label">交付定金</label>
+                        <div class="layui-input-block">
+                            <input id="jfdj" name="jfdj" placeholder="请输入交付定金" type="text" autocomplete="off" class="layui-input" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">跟单记录<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <textarea id="gdjl" name="gdjl" placeholder="请输入跟单记录"  class="layui-textarea" autocomplete="off" style="width:488px;height: 130px" lay-verify="required"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+                        <button class="layui-btn layui-btn-primary" type="button" id="backupPage">&emsp;返回&emsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@}

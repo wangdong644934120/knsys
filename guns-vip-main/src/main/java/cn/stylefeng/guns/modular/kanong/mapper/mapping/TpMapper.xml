@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.kanong.mapper.TpMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.kanong.entity.Tp">
+        <id column="id" property="id" />
+        <result column="tpzl" property="tpzl" />
+        <result column="tpzl_id" property="tpzlId" />
+        <result column="tplj" property="tplj" />
+        <result column="cjrq" property="cjrq" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS "id", tpzl AS "tpzl", tpzl_id AS "tpzlId", tplj AS "tplj", cjrq AS "cjrq"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.kanong.model.result.TpResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.TpParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_tp where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.kanong.model.result.TpResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.TpParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_tp where 1 = 1
+    </select>
+
+</mapper>

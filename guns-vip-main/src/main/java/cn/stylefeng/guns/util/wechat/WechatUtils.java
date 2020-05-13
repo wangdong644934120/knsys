@@ -25,6 +25,13 @@ public class WechatUtils {
     @Value("${guns.appSecret}")
     private String appSecret;
 
+    public void getCode2Session(String code){
+        String url="https://api.weixin.qq.com/sns/jscode2session?appid="+appId+"&secret="+appSecret+"&js_code="+code+"&grant_type=authorization_code";
+        String result = HttpUtil.get(url);
+        System.out.println("haha");
+        System.out.println(result);
+
+    }
     public String getTokenAccess(){
 //        HashMap<String, Object> paramMap = new HashMap<>();
 //        paramMap.put("city", "北京");
@@ -58,75 +65,6 @@ public class WechatUtils {
 
         return access_token;
     }
-
-//    public void getMiniProgramQr2 (String sceneStr) {
-//        try {
-//            String access_token = getTokenAccess();
-//            Map<String, Object> params = new HashMap<>();
-//            params.put("scene", "test");
-//            params.put("page", "pages/index/index");
-////            params.put("access_token", access_token);
-//            params.put("width", 430);
-//
-//            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-//
-//            HttpPost httpPost = new HttpPost("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token="+access_token);
-//            httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json");
-//            String body = JSON.toJSONString(params);
-//            StringEntity entity;
-//            entity = new StringEntity(body);
-//            entity.setContentType("image/png");
-//
-//            httpPost.setEntity(entity);
-//            HttpResponse response;
-//
-//            response = httpClient.execute(httpPost);
-//            InputStream inputStream = response.getEntity().getContent();
-//
-//            System.out.println("返回结果：");
-//            System.out.println(response.getEntity());
-//            System.out.println(response.getEntity().getContentType());
-//            System.out.println(response.getEntity().getContent());
-//            System.out.println(response.getEntity().getContentLength());
-//            System.out.println(response.getEntity().getContentEncoding());
-//
-//            int contentLen = (int) response.getEntity().getContentLength();
-//
-//            if (contentLen > 100) {
-//                WechatFileUtils.saveToImgByInputStream(inputStream, "E:\\test", "hi2.png");
-//            } else {
-//                String rs = TextUtils.is2StringByByte(inputStream);
-//                System.out.println(rs);
-//
-////                WechatResult w = (WechatResult) com.alibaba.fastjson.JSONObject.parse(rs);
-//                String errmsg = (String) JSONUtil.parseObj(rs).get("errmsg");
-//
-//                System.out.println(errmsg);
-//
-//
-//
-//            }
-//
-//
-//
-////            WechatFileUtils.saveToImgByInputStream(inputStream, "E:\\test", "hi2.png");
-////            File targetFile = new File("E:\\");
-////            if(!targetFile.exists()){
-////                targetFile.mkdirs();
-////            }
-////            FileOutputStream out = new FileOutputStream("E:\\test\\5.png");
-////
-////            byte[] buffer = new byte[8192];
-////            int bytesRead = 0;
-////            while((bytesRead = inputStream.read(buffer, 0, 8192)) != -1) {
-////                out.write(buffer, 0,bytesRead);
-////            }
-////            out.flush();
-////            out.close();
-//        } catch (Exception e) {
-//
-//        }
-//    }
 
     public void getMiniProgramQr(String sceneStr) {
         String token = this.getTokenAccess();
@@ -189,4 +127,6 @@ public class WechatUtils {
             System.out.println("生成图片失败："+e.toString());
         }
     }
+
+
 }

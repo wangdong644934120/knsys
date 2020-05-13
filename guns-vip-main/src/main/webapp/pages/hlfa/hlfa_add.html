@@ -1,0 +1,89 @@
+@layout("/common/_container.html",{js:["/assets/hlfa/hlfa_add.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">添加</span>
+</div>
+
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="hlfaForm" lay-filter="hlfaForm" class="layui-form model-form" style="max-width: 700px;margin:auto;">
+                <input name="" type="hidden"/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="id" name="id" placeholder="请输入" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">客户id<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="knUserId" name="knUserId" placeholder="请输入客户id" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">总负责人<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="zfzr" name="zfzr" placeholder="请输入总负责人" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">摄像师负责人<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="sxsfzr" name="sxsfzr" placeholder="请输入摄像师负责人" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">摄像师完成日期<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="sxswcrq" name="sxswcrq" placeholder="请输入摄像师完成日期" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">摄影师负责人<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="sysfzr" name="sysfzr" placeholder="请输入摄影师负责人" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">摄影师完成日期<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="syswcrq" name="syswcrq" placeholder="请输入摄影师完成日期" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">司仪负责人<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="syfzr" name="syfzr" placeholder="请输入司仪负责人" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">司仪完成日期<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="sywcrq" name="sywcrq" placeholder="请输入司仪完成日期" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">化妆师负责人<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="hzsfzr" name="hzsfzr" placeholder="请输入化妆师负责人" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">化妆师完成日期<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="hzswcrq" name="hzswcrq" placeholder="请输入化妆师完成日期" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+                        <button class="layui-btn layui-btn-primary" type="button" id="backupPage">&emsp;返回&emsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@}

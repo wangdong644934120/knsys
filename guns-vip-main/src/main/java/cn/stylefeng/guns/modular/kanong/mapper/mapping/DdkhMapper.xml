@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.kanong.mapper.DdkhMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.kanong.entity.Ddkh">
+        <id column="id" property="id" />
+        <result column="kn_user_id" property="knUserId" />
+        <result column="zfzr" property="zfzr" />
+        <result column="ddrq" property="ddrq" />
+        <result column="cjsj" property="cjsj" />
+        <result column="bz" property="bz" />
+        <result column="jfdj" property="jfdj" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ddkh.id AS "id", ddkh.kn_user_id AS "knUserId", knuser.xlxm as "xlxm",knuser.xnxm as "xnxm", knuser.hljd as "hljd",knuser.hlrq as "hlrq",knuser.zt as "zt",
+           ddkh.zfzr AS "zfzrid", sysuser.name as "gdr", ddkh.gdr as "gdrid",sysuserzfzr.name as "zfzr" ,ddkh.htje AS "htje", ddkh.ddrq as "ddrq",  ddkh.bz AS "bz",ddkh.jfdj AS "jfdj",
+           ddkh.ddj as "ddj",ddkh.jdk as "jdk",ddkh.wk as "wk",
+           sysuser.openid as "openId"
+    </sql>
+
+    <sql id="All_Column_List">
+        ddkh.ddrq as "ddrq", knuser.xlxm as "xlxm",knuser.xnxm as "xnxm", knuser.hljd as "hljd",knuser.hlrq as "hlrq",sysuserzfzr.name as "zfzr" ,
+        ddkh.sxsjhwcrq as "sxsjhwcrq",ddkh.sxsydrq as "sxsydrq",ddkh.sxspz as "sxspz",ddkh.sxswczt as "sxswczt",
+        ddkh.sysjhwcrq as "sysjhwcrq",ddkh.sysydrq as "sysydrq",ddkh.syspz as "syspz",ddkh.syswczt as "syswczt",
+        ddkh.syjhwcrq as "syjhwcrq",ddkh.syydrq as "syydrq",ddkh.sypz as "sypz",ddkh.sywczt as "sywczt",
+        ddkh.hzsjhwcrq as "hzsjhwcrq",ddkh.hzsydrq as "hzsydrq",ddkh.hzspz as "hzspz",ddkh.hzswczt as "hzswczt",
+        ddkh.hlfajhwcrq as "hlfajhwcrq",ddkh.hlfaydrq as "hlfaydrq",ddkh.hlfazt as "hlfazt",
+        ddkh.jthyydrq as "jthyydrq",ddkh.jthywczt as "jthywczt",
+        ddkh.hchydrq as "hchydrq",ddkh.hchwczt as "hchwczt",
+        ddkh.djhy as "djhy",ddkh.djhywczt as "djhywczt",
+        ddkh.pmsjydrq as "pmsjydrq",ddkh.pmsjwczt as "pmsjwczt",
+        ddkh.sgzzydrq as "sgzzydrq",ddkh.sgzzwczt as "sgzzwczt",
+        ddkh.fawcydrq as "fawcydrq",ddkh.fawcwczt as "fawcwczt",
+        ddkh.dzqtydrq as "dzqtydrq",ddkh.dzqtwczt as "dzqtwczt",
+        ddkh.sjapbydrq as "sjapbydrq",ddkh.sjapbwczt as "sjapbwczt",
+        ddkh.wlcgydrq as "wlcgydrq",ddkh.wlcgwczt as "wlcgwczt"
+
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ddkh where 1 = 1
+
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id=knuser.id
+        left join sys_user sysuser on ddkh.gdr=sysuser.user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        where knuser.zt=3
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+
+        order by ddkh.cjsj desc
+    </select>
+
+    <select id="getDdkhById" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id=knuser.id
+        left join sys_user sysuser on ddkh.gdr=sysuser.user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        where  knuser.zt=3 and ddkh.id=#{paramCondition.id}
+
+    </select>
+
+
+    <update id="updateUser" parameterType="cn.stylefeng.guns.modular.kanong.entity.KNUser">
+        update kn_user set hljd=#{paramCondition.hljd},hlrq=#{paramCondition.hlrq} where id=#{paramCondition.id}
+    </update>
+
+    <update id="updateDDKH" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        update kn_ddkh set zfzr=#{paramCondition.zfzr},htje=#{paramCondition.htje},jfdj=#{paramCondition.jfdj},
+        ddj=#{paramCondition.ddj},jdk=#{paramCondition.jdk},wk=#{paramCondition.wk},bz=#{paramCondition.bz}
+        where id=#{paramCondition.id}
+    </update>
+
+
+    <select id="getALLJD" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="All_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id=knuser.id
+        left join sys_user sysuser on ddkh.gdr=sysuser.user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        where  knuser.zt=3
+
+    </select>
+
+    <select id="getDDKHSH" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="All_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id=knuser.id
+        left join sys_user sysuser on ddkh.gdr=sysuser.user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        where  knuser.zt=3
+
+    </select>
+
+
+    <select id="getDdshById" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id=knuser.id
+        left join sys_user sysuser on ddkh.gdr=sysuser.user_id
+        left join sys_user sysuserzfzr on ddkh.zfzr=sysuserzfzr.user_id
+        where  knuser.zt=3 and ddkh.id=#{paramCondition.id}
+
+    </select>
+
+    <update id="updateDDSHUser" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        update kn_user set zt=6 where kn_user.id=#{paramCondition.knUserId}
+    </update>
+
+</mapper>

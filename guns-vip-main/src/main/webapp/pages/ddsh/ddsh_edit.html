@@ -1,0 +1,96 @@
+@layout("/common/_container.html",{js:["/assets/ddsh/ddsh_edit.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">修改</span>
+</div>
+
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="ddshForm" lay-filter="ddshForm" class="layui-form model-form" style="max-width: 700px;margin:auto;">
+                <input name="id" type="hidden"/>
+                <input name="knUserId" type="hidden"/>
+                <input name="zt" type="hidden"/>
+                <input name="gdrid" type="hidden"/>
+
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新郎姓名</label>
+                        <div class="layui-input-block">
+                            <input id="xlxm" name="xlxm" placeholder="" type="text" class="layui-input" lay-verify="required" required disabled/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">新娘姓名</label>
+                        <div class="layui-input-block">
+                            <input id="xnxm" name="xnxm" placeholder="" type="text" class="layui-input" lay-verify="required" required disabled/>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">婚礼日期</label>
+                        <div class="layui-input-block">
+                            <input id="hlrq" name="hlrq"   placeholder="" type="text" class="layui-input"  disabled />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">婚礼酒店</label>
+                        <div class="layui-input-block">
+                            <input id="hljd" name="hljd" placeholder="" type="text" class="layui-input" disabled />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">跟单人</label>
+                        <div class="layui-input-block">
+                            <input id="gdr" name="gdr" type="text" class="layui-input" disabled />
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">总负责人</label>
+                        <div class="layui-input-block">
+                            <input id="zfzr" name="zfzr" type="text" class="layui-input" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">合同金额</label>
+                        <div class="layui-input-block">
+                            <input id="htje" name="htje"  autocomplete="off" type="text" class="layui-input" disabled />
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">交付订金</label>
+                        <div class="layui-input-block">
+                            <input id="jfdj" name="jfdj" autocomplete="off" type="text" class="layui-input" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block" style="width:488px">
+                        <textarea id="bz" name="bz" placeholder="请输入备注"  class="layui-textarea" disabled ></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;订单完成&emsp;</button>
+                        <button class="layui-btn layui-btn-primary" type="button" id="backupPage">&emsp;返回&emsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@}

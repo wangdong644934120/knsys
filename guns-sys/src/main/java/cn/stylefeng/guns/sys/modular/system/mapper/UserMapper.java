@@ -51,4 +51,16 @@ public interface UserMapper extends BaseMapper<User> {
     void deleteGovunitOfOneUser(Long userId);
 
     void setGovunits(Long userId, List<String> govunitList);
+
+    User getUserByOpenid(@Param("openid") String openid);
+
+    User getUserBySalt(@Param("yqCode") String yqCode);
+
+    int miniRegister(@Param("name") String name,@Param("phone") String phone,@Param("openid") String openid);
+
+    List<User> getAllUsers();
+
+    List<User> getUserByid(@Param("id") String id);
+
+    List<User> getAllUserOpenid();
 }

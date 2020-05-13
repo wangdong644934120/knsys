@@ -81,4 +81,10 @@ public class GunsProperties {
         }
     }
 
+    public String getAppId(){
+        return  appId;
+    }
+    public String getAppSecret(){
+        return appSecret;
+    }
 }

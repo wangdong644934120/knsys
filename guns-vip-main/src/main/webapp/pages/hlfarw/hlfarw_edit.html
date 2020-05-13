@@ -1,0 +1,103 @@
+@layout("/common/_container.html",{js:["/assets/hlfarw/hlfarw_edit.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">修改</span>
+</div>
+
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="hlfarwForm" lay-filter="hlfarwForm" class="layui-form model-form" style="max-width: 700px;margin:auto;">
+                <input name="id" type="hidden"/>
+                <input name="zfzrid" type="hidden"/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新郎姓名</label>
+                    <div class="layui-input-block">
+                        <input id="xlxm" name="xlxm" placeholder="" type="text" class="layui-input" lay-verify="required"  disabled/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新娘姓名</label>
+                    <div class="layui-input-block">
+                        <input id="xnxm" name="xnxm" placeholder="" type="text" class="layui-input" lay-verify="required"  disabled/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">总负责人</label>
+                    <div class="layui-input-block">
+                        <input id="zfzr" name="zfzr"  type="text" class="layui-input" lay-verify="required"  disabled />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">效果图设计师</label>
+                    <div class="layui-input-block">
+                        <input id="xgtsjs" name="xgtsjs"  type="text" class="layui-input" lay-verify="required"  disabled />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">计划完成日期</label>
+                    <div class="layui-input-block">
+                        <input id="hlfajhwcrq" name="hlfajhwcrq"  type="text" class="layui-input"  autocomplete="off" disabled lay-verify="required" />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">实际完成日期<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="hlfaydrq" name="hlfaydrq" placeholder="请选择实际完成日期"  type="text" class="layui-input"  autocomplete="off"  lay-verify="required" />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">效果图</label>
+                    <div class="layui-upload-drag" id="xgt">
+                        <i class="layui-icon"></i>
+                        <p>点击上传，或将文件拖拽到此处</p>
+                        <div class="layui-hide" id="uploadxgt" style="color:blue">
+                            <hr>
+                            上传成功
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">合同清单</label>
+                    <div class="layui-upload-drag" id="htqd">
+                        <i class="layui-icon"></i>
+                        <p>点击上传，或将文件拖拽到此处</p>
+                        <div class="layui-hide" id="uploadhtqd" style="color:blue">
+                            <hr>
+                            上传成功
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否完成<span style="color: red;">*</span></label>
+
+                    <div class="layui-input-inline">
+                        <select id="hlfazt" name="hlfazt" lay-verify="required">
+                            <option value="">请选择是否完成</option>
+                            <option value="完成" selected="">完成</option>
+                            <option value="未完成">未完成</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+                        <button class="layui-btn layui-btn-primary" type="button" id="backupPage">&emsp;返回&emsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@}

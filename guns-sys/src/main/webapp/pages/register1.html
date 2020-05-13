@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>用户绑定</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--<link rel="stylesheet" href="${ctxPath}/assets/common/layui/css/layui.css"/>-->
+    <link rel="stylesheet" href="#" id="linklayuicss"/>
+    <script>
+        var path=window.location.origin+"/assets/common/layui/css/layui.css";
+        document.getElementById("linklayuicss").setAttribute("href",path);
+
+    </script>
+    <!--<link rel="stylesheet" href="${ctxPath}/assets/common/css/login.css" media="all">-->
+    <link rel="stylesheet" href="#" media="all" id="linklogincss">
+    <script>
+        var path=window.location.origin+"/assets/common/css/login.css";
+        document.getElementById("linklogincss").setAttribute("href",path);
+
+    </script>
+    <style>
+        body {
+            background-image: url("${ctxPath}/assets/common/images/bg_login2.svg");
+            background-position: center 110px;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-color: #f0f2f5;
+        }
+
+        .login-header {
+            color: rgba(0, 0, 0, .85) !important;
+        }
+
+        .login-footer {
+            color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        .login-footer a {
+            color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        .login-footer a:hover {
+            color: rgba(0, 0, 0, 0.4) !important;
+        }
+    </style>
+    <script>
+        if (window != top)
+            top.location.replace(location.href);
+    </script>
+</head>
+
+<body>
+<div class="login-wrapper">
+
+    <div class="login-header">
+       <!-- <img src="127.0.0.1/assets/common/images/logo.png"> ${systemName}-->
+    </div>
+
+    <div class=" login-body">
+        <div id="loginForm" class="layui-card" >
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户绑定
+            </div>
+            <form id="myform" class="layui-card-body layui-form layui-form-pane" action="#" method="post">
+                <div id="mbLoginField">
+                    <div class="layui-form-item" style="display: none">
+                        <label class="layui-form-label">openid</label>
+                        <div class="layui-input-block">
+                            <input id="openid" name="openid" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input id="phone" name="phone" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input id="name" name="name" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邀请码</label>
+                        <div class="layui-input-block">
+                            <input id="YQCode" name="YQCode" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>绑定</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="login-footer">
+        <p>© 2020  威海卡侬婚庆  版权所有</p>
+    </div>
+</div>
+<script>
+    var path=window.location.origin+"/wechatregister";
+    document.getElementById("myform").setAttribute("action",path);
+
+</script>
+<!--@/* 加入contextPath属性和session超时的配置 */-->
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "",
+        addCtx: function (ctx) {
+            if (this.ctxPath === "") {
+                this.ctxPath = ctx;
+            }
+        }
+    };
+
+    Feng.addCtx("${ctxPath}");
+    console.log(Feng.ctxPath);
+</script>
+<!--<script type="text/javascript" src="${ctxPath}/assets/common/layui/layui.js"></script>-->
+<script type="text/javascript">
+    var path=window.location.origin+"/assets/common/layui/layui.js";
+    document.write('<script src="'+path+'"></\script>');
+</script>
+<!--<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js"></script>-->
+<script type="text/javascript">
+    var path=window.location.origin+"/assets/common/js/common.js";
+    document.write('<script src="'+path+'"></\script>');
+</script>
+<!--<script type="text/javascript" src="${ctxPath}/assets/common/js/commonUtils.js"></script>-->
+<script type="text/javascript">
+    var path=window.location.origin+"/assets/common/js/commonUtils.js";
+    document.write('<script src="'+path+'"></\script>');
+</script>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+</script>
+<script>
+    document.getElementById("openid").value=getUrlParam("openid");
+    layui.use(['layer', 'ax','form'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var $ax = layui.ax;
+        var form = layui.form;
+        // 表单提交
+        form.on('submit(login-submit)', function (obj) {
+            var ajax = new $ax(window.location.origin+"/wechatregister", function (data) {
+                console.log("ok");
+            }, function (data) {
+               console.log("error");
+            });
+            ajax.set(data.field);
+            ajax.start();
+            return false;
+        });
+
+    });
+
+
+</script>
+
+
+
+</body>
+</html>

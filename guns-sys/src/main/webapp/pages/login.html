@@ -72,7 +72,7 @@
                             <input type="radio" name="remember" value="off" title="否">
                         </div>
                     </div>
-                    <div class="layui-form-item">
+                    <!--<div class="layui-form-item">
                         <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
                         <div class="layui-input-block">
                             <div class="layui-row inline-block">
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div id="mbLoginField">
                     <div class="layui-form-item">
@@ -134,7 +134,8 @@
     </div>
 
     <div class="login-footer">
-        <p>© 2019 <a href="http://www.weihaicollege.com/xxgc/" target="_blank">    智慧学院   版权所有</a></p>
+        <!--<p>© 2019 <a href="http://www.weihaicollege.com/xxgc/" target="_blank">    威海卡侬婚庆  版权所有</a></p>-->
+        <p>© 2020  威海卡侬婚庆  版权所有</p>
     </div>
 </div>
 
@@ -155,11 +156,24 @@
 <script type="text/javascript" src="${ctxPath}/assets/common/js/commonUtils.js"></script>
 
 <script>
-    layui.use(['layer', 'form'], function () {
+    layui.use(['layer', 'ax','form'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
+        var $ax = layui.ax;
         var form = layui.form;
         if(Common.isMobile()){
+            //$(".login-body").css("display","none");
+            // var ajax = new $ax("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx74dbb75ab67f1f74&redirect_uri=http%3A%2F%2F2w120l6082.imwork.net%2Fwechatservice%2Fgetcode&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            // var result = ajax.start();
+          /*  $.ajax({
+                url:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx74dbb75ab67f1f74&redirect_uri=http%3a%2f%2f2w120l6082.imwork.net%2fassets%2fgetcode&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect",
+                type:"GET",
+                dataType:"jsonp",
+                success:function(data){
+                    var result=JSON.stringify(data);
+                    console.log(result);
+                }
+            });*/
             $("#pcLoginField").remove();
         }else{
             $("#mbLoginField").remove();
@@ -173,9 +187,9 @@
         });
 
         // 图形验证码
-        $('.login-captcha').click(function () {
+        /*$('.login-captcha').click(function () {
             this.src = this.src + '?t=' + (new Date).getTime();
-        });
+        });*/
 
         var errorMsg = "${tips!}";
         if (errorMsg) {

@@ -30,7 +30,7 @@
     </sql>
 
     <sql id="Base_Column_List_With_Pwd">
-		 user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", password AS "password", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version"
+		 user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", password AS "password", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version",openId AS "openId"
 	</sql>
 
     <select id="selectUsers" resultType="map">
@@ -118,5 +118,34 @@
             )
         </foreach >
     </update>
+
+    <select id="getUserByOpenid" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List_With_Pwd"/>
+        from sys_user where openid = #{openid} and status != 'DELETED'
+    </select>
+
+    <select id="getUserBySalt" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List_With_Pwd"/>
+        from sys_user where salt=#{yqCode} and status != 'DELETED'
+    </select>
+
+    <update id="miniRegister">
+		update sys_user set openid=#{openid} where name=#{name} and phone=#{phone}
+	</update>
+
+    <select id="getAllUsers" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select user_id,name from sys_user where (user_id!=1 or account!='admin' ) and  status != 'DELETED'
+    </select>
+
+    <select id="getUserByid" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select openId as "openId" from sys_user where (user_id!=1 or account!='admin' ) and  status != 'DELETED' and user_id=#{id}
+    </select>
+
+    <select id="getAllUserOpenid" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select openId as "openId" from sys_user where (user_id!=1 or account!='admin' ) and  status != 'DELETED' and (openId !=null or openId !='')
+    </select>
+
 
 </mapper>

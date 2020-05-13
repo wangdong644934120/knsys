@@ -15,6 +15,7 @@
  */
 package cn.stylefeng.guns.sys.modular.system.controller;
 
+import cn.hutool.http.HttpUtil;
 import cn.stylefeng.guns.base.shiro.ShiroUser;
 import cn.stylefeng.guns.sms.modular.model.SendMessageParam;
 import cn.stylefeng.guns.sms.modular.provider.SmsServiceApi;
@@ -38,6 +39,7 @@ import com.google.code.kaptcha.Producer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +49,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import static cn.stylefeng.roses.core.util.HttpContext.getIp;
@@ -67,6 +72,7 @@ public class LoginController extends BaseController {
     private SmsServiceApi smsServiceApi;
     @Autowired
     private Producer producer;
+
 
     /**
      * 跳转到主页
@@ -135,6 +141,11 @@ public class LoginController extends BaseController {
         }
     }
 
+    @RequestMapping("/registerpage")
+    public String wechatpage(){
+        String openid=super.getPara("openid");
+        return "/register.html?openid="+openid;
+    }
     /**
      * 点击登录执行的动作
      *
@@ -142,7 +153,7 @@ public class LoginController extends BaseController {
      * @Date 2018/12/23 5:42 PM
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginVali() {
+    public String loginVali(HttpServletResponse response) {
         String username = super.getPara("username");
         String password = super.getPara("password");
         String remember = super.getPara("remember");
@@ -167,12 +178,12 @@ public class LoginController extends BaseController {
                     throw new InvalidKaptchaException();
                 }
             }else{//PC的验证码
-                String sessionCapText=(String)ShiroKit.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+                /*String sessionCapText=(String)ShiroKit.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
                 if(StringUtils.isNotEmpty(sessionCapText)){
                     if(!sessionCapText.toLowerCase().equals(capText.toLowerCase())){
                         throw new InvalidKaptchaException();
                     }
-                }
+                }*/
             }
         }
 
@@ -204,6 +215,104 @@ public class LoginController extends BaseController {
         }
     }
 
+//    @RequestMapping(value = "/loginWeChat", method = RequestMethod.POST)
+//    public void loginWeChat(HttpServletRequest request,HttpServletResponse response){
+//        try{
+//
+//            String openid=super.getPara("openid");
+//            String code = super.getPara("code");
+//            if(openid==null){
+//                String url="https://api.weixin.qq.com/sns/jscode2session?appid=wx593d1073c0290b96&secret=e14f92b92833a6a3b1f2c69c7c6e2c52&js_code="+code+"&grant_type=authorization_code";
+//                String result = HttpUtil.get(url);
+//                System.out.println(result);
+//                //根据openid从数据库查询人员是否已经注册
+//                JSONObject obj = new JSONObject(result);
+//                openid=obj.get("openid").toString();
+//            }
+//
+//            User user=userService.getUserByOpenid(openid);
+//            System.out.println("微信登录："+user);
+//            String sendData="";
+//            if(user==null){
+//                //没有注册ojMRa5BHNavDOLvztNpmInhg01EQ
+//                sendData="{\"result\":\"0\",\"openid\":\""+openid+"\"}";
+//            }else{
+//                //已经注册
+//                sendData="{\"result\":\"1\",\"name\":\""+user.getName()+"\",\"openid\":\""+openid+"\"}";
+//                System.out.println(user);
+//                String username =user.getAccount();
+//                String password = "test";
+//                ShiroTempPasswordHolder.set("test");
+//                Subject currentUser = ShiroKit.getSubject();
+//                UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray());
+//                token.setRememberMe(false);
+//                //执行shiro登录操作
+//                currentUser.login(token);
+//                //登录成功，记录登录日志
+//                ShiroUser shiroUser = ShiroKit.getUserNotNull();
+//                LogManager.me().executeLog(LogTaskFactory.loginLog(shiroUser.getId(), getIp()));
+//                ShiroKit.getSession().setAttribute("sessionFlag", true);
+//            }
+//            request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//            System.out.println(request.getCookies());
+////ojMRa5BHNavDOLvztNpmInhg01EQ
+//            response.setContentType("text/html;charset=utf-8");
+//            /* 设置响应头允许ajax跨域访问 */
+//            response.setHeader("Access-Control-Allow-Origin", "*");
+//            //response.addCookie(request.getCookies()[0]);
+//            /* 星号表示所有的异域请求都可以接受， */
+//            response.setHeader("Access-Control-Allow-Methods", "GET,POST");
+//            //返回值给微信小程序
+//            Writer out = response.getWriter();
+//            out.write(sendData);
+//            out.flush();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+
+    @RequestMapping(value = "/wechatregister", method = RequestMethod.POST)
+    public void register(HttpServletResponse response){
+        try{
+            String name = super.getPara("name");
+            String phone = super.getPara("phone");
+            String yqCode=super.getPara("YQCode");
+            String openid = super.getPara("openid");
+            System.out.println(name+" "+phone+" "+yqCode+" "+openid);
+            //先根据注册码，判断注册码是否有效
+            //根据邀请码和openid盘点用户是否已经注册
+            String sendData="";
+            User user=userService.getUserBySalt(yqCode);
+            if(user==null){
+                sendData="{\"result\":\"-1\",\"msg\":\"邀请码错误\"}";
+            }else if(user!=null && user.getOpenId()!=null && !user.getOpenId().equals("")){
+                //用户已经注册过
+                sendData="{\"result\":\"0\",\"msg\":\"用户已经绑定\"}";
+                System.out.println("用户已经绑定");
+            }else{
+                //用户没有注册，可以注册
+                int result=userService.miniRegister(name,phone,openid);
+                if(result==1){
+                    sendData="{\"result\":\"1\",\"msg\":\"绑定成功\",\"name\":\""+name+"\",\"phone\":\""+phone+"\",\"openid\":\""+openid+"\"}";
+                }else{
+                    sendData="{\"result\":\"2\",\"msg\":\"姓名和手机号不匹配\",\"name\":\""+name+"\",\"phone\":\""+phone+"\",\"openid\":\""+openid+"\"}";
+                }
+
+            }
+            response.setContentType("text/html;charset=utf-8");
+            /* 设置响应头允许ajax跨域访问 */
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            /* 星号表示所有的异域请求都可以接受， */
+            response.setHeader("Access-Control-Allow-Methods", "GET,POST");
+            //返回值给微信小程序
+            Writer out = response.getWriter();
+            out.write(sendData);
+            out.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 退出登录
      *
@@ -230,19 +339,19 @@ public class LoginController extends BaseController {
         if(createTime>0&&(System.currentTimeMillis()-createTime)<60*1000){
             return ResponseData.error(400,"操作过于频繁,请稍后重试");
         }
-        String verifyCode=producer.createText();
-        System.out.println("***********"+verifyCode);
-        CacheUtil.put(Cache.GLOBAL,phoneNumber,verifyCode,120);//一分钟
-        SendMessageParam sendMessageParam = new SendMessageParam();
-        sendMessageParam.setPhoneNumbers(phoneNumber);
-        //模板号
-        sendMessageParam.setTemplateCode("SMS_174580476");
-        //模板里的参数
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("code",verifyCode);
-        //params.put("xxxx", heartCheck.getServiceName());
-        sendMessageParam.setParams(params);
-        smsServiceApi.sendShortMessage(sendMessageParam);
+//        String verifyCode=producer.createText();
+//        System.out.println("***********"+verifyCode);
+//        CacheUtil.put(Cache.GLOBAL,phoneNumber,verifyCode,120);//一分钟
+//        SendMessageParam sendMessageParam = new SendMessageParam();
+//        sendMessageParam.setPhoneNumbers(phoneNumber);
+//        //模板号
+//        sendMessageParam.setTemplateCode("SMS_174580476");
+//        //模板里的参数
+//        HashMap<String, Object> params = new HashMap<>();
+//        params.put("code",verifyCode);
+//        //params.put("xxxx", heartCheck.getServiceName());
+//        sendMessageParam.setParams(params);
+//        smsServiceApi.sendShortMessage(sendMessageParam);
 
         return ResponseData.success();
     }

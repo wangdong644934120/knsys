@@ -243,4 +243,32 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         this.baseMapper.deleteGovunitOfOneUser(userId);
         this.baseMapper.setGovunits(userId, Arrays.asList(govunitIds.split(",")));
     }
+
+    public User getUserByOpenid(String openid){
+        return this.baseMapper.getUserByOpenid(openid);
+    }
+    public User getUserBySalt(String yqCode){
+        return this.baseMapper.getUserBySalt(yqCode);
+    }
+
+    public int miniRegister(String name,String phone,String openid){
+        return this.baseMapper.miniRegister(name,phone,openid);
+    }
+    //获取所有用户信息（除了超级管理员）
+    public List<User> getAllUsers(){
+        return this.baseMapper.getAllUsers();
+    }
+
+    public User getUserByid(String userId){
+        List<User> list=this.baseMapper.getUserByid(userId);
+        if(list!=null && !list.isEmpty()){
+            return list.get(0);
+        }else{
+            return null;
+        }
+    }
+
+    public List<User> getAllUserOpenid(){
+        return this.baseMapper.getAllUserOpenid();
+    }
 }

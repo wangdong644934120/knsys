@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.kanong.mapper.HlfaMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.kanong.entity.Sdjg">
+        <result column="id" property="id" />
+        <result column="kn_user_id" property="knUserId" />
+        <result column="zfzr" property="zfzr" />
+        <result column="sxsfzr" property="sxsfzr" />
+        <result column="sxswcrq" property="sxswcrq" />
+        <result column="sysfzr" property="sysfzr" />
+        <result column="syswcrq" property="syswcrq" />
+        <result column="syfzr" property="syfzr" />
+        <result column="sywcrq" property="sywcrq" />
+        <result column="hzsfzr" property="hzsfzr" />
+        <result column="hzswcrq" property="hzswcrq" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ddkh.id AS "id", ddkh.kn_user_id AS "knUserId", ddkh.zfzr AS "zfzrid" ,knuser.xlxm as "xlxm",
+         knuser.xnxm as "xnxm",sysuser.name as "zfzr",ddkh.hlfajhwcrq as "hlfajhwcrq",ddkh.hlfaydrq as "hlfaydrq",ddkh.hlfazt as "hlfazt",
+         sysuserxgt.name as "xgtsjs",ddkh.xgtsjs as "xgtsjsid"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id = knuser.id
+        left join sys_user sysuser on ddkh.zfzr = sysuser.user_id
+        left join sys_user sysuserxgt on ddkh.xgtsjs=sysuserxgt.user_id
+        where knuser.zt=3 and ddkh.id=#{paramCondition.id}
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.kanong.model.result.DdkhResult" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam">
+        select
+        <include refid="Base_Column_List"/>
+        from kn_ddkh ddkh left join kn_user knuser on ddkh.kn_user_id = knuser.id
+        left join sys_user sysuser on ddkh.zfzr = sysuser.user_id
+        left join sys_user sysuserxgt on ddkh.xgtsjs=sysuserxgt.user_id
+        where knuser.zt=3
+        <if test="paramCondition.xlxm != null and paramCondition.xlxm != ''">
+            and (xlxm like CONCAT('%',#{paramCondition.xlxm},'%') or xnxm like CONCAT('%',#{paramCondition.xlxm},'%') )
+        </if>
+
+    </select>
+
+    <update id="updateJD" parameterType="cn.stylefeng.guns.modular.kanong.model.params.DdkhParam" >
+        update kn_ddkh set hlfajhwcrq=#{paramCondition.hlfajhwcrq} ,xgtsjs=#{paramCondition.xgtsjs}
+        where id=#{paramCondition.id}
+    </update>
+
+</mapper>

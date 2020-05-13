@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>用户绑定</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link  rel="stylesheet" href="../assets/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../assets/common/css/login.css" media="all">
+    <style>
+        body {
+            background-image: url("../assets/common/images/bg_login2.svg");
+            background-position: center 110px;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-color: #f0f2f5;
+        }
+
+        .login-header {
+            color: rgba(0, 0, 0, .85) !important;
+        }
+
+        .login-footer {
+            color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        .login-footer a {
+            color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        .login-footer a:hover {
+            color: rgba(0, 0, 0, 0.4) !important;
+        }
+    </style>
+    <script>
+        if (window != top)
+            top.location.replace(location.href);
+    </script>
+</head>
+
+<body>
+<div class="login-wrapper">
+
+    <div class="login-header">
+       <!--img src="../assets/common/images/logo.png">-->
+    </div>
+
+    <div class=" login-body">
+        <div id="loginForm" class="layui-card" >
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户绑定
+            </div>
+            <form id="myform" class="layui-card-body layui-form layui-form-pane"  method="post">
+                <div id="mbLoginField">
+                    <div class="layui-form-item" style="display: none" >
+                        <label class="layui-form-label">openid</label>
+                        <div class="layui-input-block">
+                            <input id="openid" name="openid" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input id="phone" name="phone" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input id="name" name="name" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邀请码</label>
+                        <div class="layui-input-block">
+                            <input id="YQCode" name="YQCode" type="text" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>绑定</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <div class="login-footer">
+        <p>© 2020  威海卡侬婚庆  版权所有</p>
+    </div>
+</div>
+<script>
+    var path=window.location.origin+"/wechatregister";
+    document.getElementById("myform").setAttribute("action",path);
+
+</script>
+<!--@/* 加入contextPath属性和session超时的配置 */-->
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "",
+        addCtx: function (ctx) {
+            if (this.ctxPath === "") {
+                this.ctxPath = ctx;
+            }
+        }
+    };
+
+    Feng.addCtx("${ctxPath}");
+</script>
+<script type="text/javascript" src="../assets/common/layui/layui.js"></script>
+<script type="text/javascript" src="../assets/common/js/commonUtils.js"></script>
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+</script>
+<script>
+    document.getElementById("openid").value=getUrlParam("openid");
+</script>
+<script>
+    layui.config({
+        base: 'assets/expand/module/' //假设这是你存放拓展模块的根目录
+    }).extend({ //设定模块别名
+        // mymod: 'ax' //如果 mymod.js 是在根目录，也可以不用设定别名
+        // ,mod1: 'ax.js' //相对于上述 base 目录的子目录
+        ax:'ax/ax'
+    });
+
+    layui.use(['layer', 'form','jquery','ax'], function () {
+        var form = layui.form;
+        var $=layui.jquery;
+        var $ax=layui.ax;
+        var layer=layui.layer;
+        form.on('submit(login-submit)', function (data) {
+            var ajax = new $ax(window.location.origin+"/wechatregister", function (data) {
+                layer.msg(data.msg);
+                window.location.href=window.location.origin+"/jdtj"
+            }, function (data) {
+                layer.msg(data.msg);
+            });
+            ajax.set(data.field);
+            ajax.start();
+
+            return false;
+        });
+    });
+</script>
+
+
+</body>
+</html>
